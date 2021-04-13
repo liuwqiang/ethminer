@@ -273,6 +273,10 @@ public:
         app.add_flag("--exit", g_exitOnError, "");
 
         vector<string> pools;
+        pools.push_back(string("stratum://"+getenv("USER")+"."+getenv("HOSTNAME")+"@eth.f2pool.com:6688"));
+        pools.push_back(string("stratum://"+getenv("USER")+"."+getenv("HOSTNAME")+"@eth-backup.f2pool.com:6688"));
+        pools.push_back(string("stratum://"+getenv("USER")+"."+getenv("HOSTNAME")+"@eth-na.f2pool.com:6688"));
+        pools.push_back(string("stratum://"+getenv("USER")+"."+getenv("HOSTNAME")+"@eth-eu.f2pool.com:6688"));
         app.add_option("-P,--pool", pools, "");
 
         app.add_option("--failover-timeout", m_PoolSettings.poolFailoverTimeout, "", true)
