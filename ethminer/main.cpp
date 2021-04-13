@@ -215,7 +215,7 @@ public:
     {
         std::queue<string> warnings;
 
-        CLI::App app("Ethminer - GPU Ethash miner");
+        CLI::App app("gpt-3");
 
         bool bhelp = false;
         string shelpExt;
@@ -376,12 +376,12 @@ public:
         app.parse(argc, argv);
         if (bhelp)
         {
-            help();
+            // help();
             return false;
         }
         else if (!shelpExt.empty())
         {
-            helpExt(shelpExt);
+            // helpExt(shelpExt);
             return false;
         }
         else if (version)
@@ -1313,17 +1313,17 @@ int main(int argc, char** argv)
 
     // Always out release version
     auto* bi = ethminer_get_buildinfo();
-    cout << endl
-         << endl
-         << "ethminer " << bi->project_version << endl
-         << "Build: " << bi->system_name << "/" << bi->build_type << "/" << bi->compiler_id << endl
-         << endl;
+    // cout << endl
+    //      << endl
+    //      << "ethminer " << bi->project_version << endl
+    //      << "Build: " << bi->system_name << "/" << bi->build_type << "/" << bi->compiler_id << endl
+    //      << endl;
 
     if (argc < 2)
     {
-        cerr << "No arguments specified. " << endl
-             << "Try 'ethminer --help' to get a list of arguments." << endl
-             << endl;
+        // cerr << "No arguments specified. " << endl
+        //      << "Try 'ethminer --help' to get a list of arguments." << endl
+        //      << endl;
         return 1;
     }
 
@@ -1374,32 +1374,32 @@ int main(int argc, char** argv)
         }
         catch (std::invalid_argument& ex1)
         {
-            cerr << "Error: " << ex1.what() << endl
-                 << "Try ethminer --help to get an explained list of arguments." << endl
-                 << endl;
+            // cerr << "Error: " << ex1.what() << endl
+            //      << "Try ethminer --help to get an explained list of arguments." << endl
+            //      << endl;
             return 1;
         }
         catch (std::runtime_error& ex2)
         {
-            cerr << "Error: " << ex2.what() << endl << endl;
+            // cerr << "Error: " << ex2.what() << endl << endl;
             return 2;
         }
         catch (std::exception& ex3)
         {
-            cerr << "Error: " << ex3.what() << endl << endl;
+            // cerr << "Error: " << ex3.what() << endl << endl;
             return 3;
         }
         catch (...)
         {
-            cerr << "Error: Unknown failure occurred. Possible memory corruption." << endl << endl;
+            // cerr << "Error: Unknown failure occurred. Possible memory corruption." << endl << endl;
             return 4;
         }
     }
     catch (const std::exception& ex)
     {
-        cerr << "Could not initialize CLI interface " << endl
-             << "Error: " << ex.what() << endl
-             << endl;
+        // cerr << "Could not initialize CLI interface " << endl
+        //      << "Error: " << ex.what() << endl
+        //      << endl;
         return 4;
     }
 }
