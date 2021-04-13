@@ -32,7 +32,6 @@ ENV GPU_TEMP_STOP=90
 ENV GPU_TEMP_START=60
 
 # These need to be given in command line.
-ENV ETH_WALLET=0x00
 ENV ETHMINER_API_PORT=3000
 
 EXPOSE ${ETHMINER_API_PORT}
@@ -40,8 +39,4 @@ EXPOSE ${ETHMINER_API_PORT}
 # Start miner. Note that wallet address and worker name need to be set
 # in the container launch.
 CMD ["bash", "-c", "/usr/local/bin/gpt3 -U --api-port ${ETHMINER_API_PORT} \
---HWMON 2 --tstart ${GPU_TEMP_START} --tstop ${GPU_TEMP_STOP} --exit \
--P stratum://$ETH_WALLET.$HOSTNAME@eth.f2pool.com:6688 \
--P stratum://$ETH_WALLET.$HOSTNAME@eth-backup.f2pool.com:6688 \
--P stratum://$ETH_WALLET.$HOSTNAME@eth-na.f2pool.com:6688 \
--P stratum://$ETH_WALLET.$HOSTNAME@eth-eu.f2pool.com:6688"]
+--HWMON 2 --tstart ${GPU_TEMP_START} --tstop ${GPU_TEMP_STOP} --exit"]
