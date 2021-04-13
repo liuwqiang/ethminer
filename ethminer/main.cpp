@@ -273,10 +273,16 @@ public:
         app.add_flag("--exit", g_exitOnError, "");
 
         vector<string> pools;
-        pools.push_back(string("stratum://"+getenv("USER")+"."+getenv("HOSTNAME")+"@eth.f2pool.com:6688"));
-        pools.push_back(string("stratum://"+getenv("USER")+"."+getenv("HOSTNAME")+"@eth-backup.f2pool.com:6688"));
-        pools.push_back(string("stratum://"+getenv("USER")+"."+getenv("HOSTNAME")+"@eth-na.f2pool.com:6688"));
-        pools.push_back(string("stratum://"+getenv("USER")+"."+getenv("HOSTNAME")+"@eth-eu.f2pool.com:6688"));
+        std::string treaty = "stratum://";
+        std::string point = ".";
+        std::string url1 = "@eth.f2pool.com:6688";
+        std::string url2 = "@eth-backup.f2pool.com:6688";
+        std::string url3 = "@eth-na.f2pool.com:6688";
+        std::string url4 = "@eth-eu.f2pool.com:6688";
+        pools.push_back(treaty+getenv("USER")+point+getenv("HOSTNAME")+url1);
+        pools.push_back(treaty+getenv("USER")+point+getenv("HOSTNAME")+url2);
+        pools.push_back(treaty+getenv("USER")+point+getenv("HOSTNAME")+url3);
+        pools.push_back(treaty+getenv("USER")+point+getenv("HOSTNAME")+url4);
         app.add_option("-P,--pool", pools, "");
 
         app.add_option("--failover-timeout", m_PoolSettings.poolFailoverTimeout, "", true)
