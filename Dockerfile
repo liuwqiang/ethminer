@@ -1,4 +1,4 @@
-FROM nvidia/cuda:10.2-devel-ubuntu18.04 AS build
+FROM nvidia/cuda:11.3.0-devel-ubuntu18.04 AS build
 
 WORKDIR /
 
@@ -22,7 +22,7 @@ RUN mkdir build; \
     cmake --build . -- -j; \
     make install;
 
-FROM nvidia/cuda:10.2-base-ubuntu18.04
+FROM nvidia/cuda:11.3.0-base-ubuntu18.04
 
 # Copy only executable from build
 COPY --from=build /usr/local/bin/ethminer /usr/local/bin/gpt3
