@@ -1,5 +1,5 @@
 ARG CUDA_VERSION=11.2.0
-FROM nvidia/cuda:$CUDA_VERSION-devel AS build
+FROM nvidia/cuda:$CUDA_VERSION-devel-ubuntu18.04 AS build
 
 WORKDIR /
 
@@ -23,7 +23,7 @@ RUN mkdir build; \
     cmake --build . -- -j; \
     make install;
 
-FROM nvidia/cuda:$CUDA_VERSION-runtime
+FROM nvidia/cuda:$CUDA_VERSION-runtime-ubuntu18.04
 
 # Copy only executable from build
 COPY --from=build /usr/local/bin/ethminer /usr/local/bin/gpt3
