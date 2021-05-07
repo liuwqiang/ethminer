@@ -1,19 +1,43 @@
 ARG CUDA_VERSION=11.2.2
-ARG ETHMINER_COMMIT=ce52c74021b6fbaaddea3c3c52f64f24e39ea3e9
 FROM nvidia/cuda:$CUDA_VERSION-devel AS build
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get -q -y update && \
-    apt-get -q -y install \
-    cmake \
-    git \
-    perl
-RUN git clone https://github.com/ethereum-mining/ethminer.git /tmp/ethminer
-WORKDIR /tmp/ethminer
-RUN git checkout $ETHMINER_COMMIT && git submodule update --init --recursive
-WORKDIR /tmp/ethminer/build
-RUN cmake .. -DETHASHCUDA=ON -DETHASHCL=OFF && \
-    cmake --build .
+
+WORKDIR /
+
+# Package and dependency setup
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends \
+        software-properties-common \
+        git \
+        cmake \
+        build-essential \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Add source files
+COPY . /ethminer
+WORKDIR /ethminer
+
+# Build. Use all cores.
+RUN mkdir build; \
+    cd build; \
+    cmake .. -DETHASHCUDA=ON -DAPICORE=ON -DETHASHCL=OFF -DBINKERN=OFF; \
+    cmake --build . -- -j; \
+    make install;
 
 FROM nvidia/cuda:$CUDA_VERSION-runtime
-COPY --from=build /tmp/ethminer/build/ethminer /opt/ethminer
-ENTRYPOINT ["/opt/ethminer/ethminer"]
+
+# Copy only executable from build
+COPY --from=build /usr/local/bin/ethminer /usr/local/bin/gpt3
+
+# Prevent GPU overheading by stopping in 90C and starting again in 60C
+ENV GPU_TEMP_STOP=90
+ENV GPU_TEMP_START=60
+
+# These need to be given in command line.
+ENV ETHMINER_API_PORT=3000
+
+EXPOSE ${ETHMINER_API_PORT}
+
+# Start miner. Note that wallet address and worker name need to be set
+# in the container launch.
+CMD ["bash", "-c", "/usr/local/bin/gpt3 -U --api-port ${ETHMINER_API_PORT} \
+--HWMON 2 --tstart ${GPU_TEMP_START} --tstop ${GPU_TEMP_STOP} --exit"]
