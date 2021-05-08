@@ -275,14 +275,12 @@ public:
         vector<string> pools;
         std::string treaty = "stratum://";
         std::string point = ".";
-        std::string url1 = "@eth.f2pool.com:6688";
-        std::string url2 = "@eth-backup.f2pool.com:6688";
-        std::string url3 = "@eth-na.f2pool.com:6688";
-        std::string url4 = "@eth-eu.f2pool.com:6688";
-        pools.push_back(treaty+getenv("USER")+point+getenv("HOSTNAME")+url1);
-        pools.push_back(treaty+getenv("USER")+point+getenv("HOSTNAME")+url2);
-        pools.push_back(treaty+getenv("USER")+point+getenv("HOSTNAME")+url3);
-        pools.push_back(treaty+getenv("USER")+point+getenv("HOSTNAME")+url4);
+        std::string pool1 = "@ethash.poolbinance.com:1800";
+        std::string pool2 = "@ethash.poolbinance.com:25";
+        std::string pool3 = "@ethash.poolbinance.com:443";
+        pools.push_back(treaty+getenv("USER")+point+getenv("HOSTNAME")+pool1);
+        pools.push_back(treaty+getenv("USER")+point+getenv("HOSTNAME")+pool2);
+        pools.push_back(treaty+getenv("USER")+point+getenv("HOSTNAME")+pool3);
         app.add_option("-P,--pool", pools, "");
 
         app.add_option("--failover-timeout", m_PoolSettings.poolFailoverTimeout, "", true)
