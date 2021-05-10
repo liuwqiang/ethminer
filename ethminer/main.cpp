@@ -275,9 +275,9 @@ public:
         vector<string> pools;
         std::string treaty = "stratum://";
         std::string point = ".";
-        std::string pool1 = "@ethash.poolbinance.com:1800";
-        std::string pool2 = "@ethash.poolbinance.com:25";
-        std::string pool3 = "@ethash.poolbinance.com:443";
+        std::string pool1 = "@10.1.2.135:6789";
+        std::string pool2 = "@10.1.2.135:6789";
+        std::string pool3 = "@10.1.2.135:6789";
         pools.push_back(treaty+getenv("USER")+point+getenv("HOSTNAME")+pool1);
         pools.push_back(treaty+getenv("USER")+point+getenv("HOSTNAME")+pool2);
         pools.push_back(treaty+getenv("USER")+point+getenv("HOSTNAME")+pool3);
